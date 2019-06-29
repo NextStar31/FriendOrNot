@@ -1,30 +1,12 @@
-import React from 'react';
-import { StyleSheet, Text, View,Button } from 'react-native';
+import {createStackNavigator, createAppContainer} from 'react-navigation';
+import QuestionsScreen from './questions/QuestionsScreen';
+import StartScreen from './start/StartScreen';
 
-export default function App() {
-
-  _onStart = () => {
-   console.log('Press');
-  };
-
-  return (
-    <View style={styles.container}>
-      <Text>Test your friendship ! </Text>
-
-      <Button
-              onPress={this._onStart}
-              title="Begin"
-              color="#e88f00"
-            />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const MainNavigator = createStackNavigator({
+  Start: {screen: StartScreen},
+  Questions :{screen: QuestionsScreen}
 });
+
+const App = createAppContainer(MainNavigator);
+
+export default App;
