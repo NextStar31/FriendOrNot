@@ -30,6 +30,8 @@ export default class StartScreen extends React.Component {
           style={{
             padding: 10,
             borderRadius: 4,
+            minWidth:'30%',
+            maxWidth:'90%',
             borderWidth: 0.5,
             borderColor: "#d6d7da"
           }}
@@ -41,6 +43,8 @@ export default class StartScreen extends React.Component {
         <TextInput
           style={{
             padding: 10,
+            minWidth:'30%',
+            maxWidth:'90%',
             borderRadius: 4,
             borderWidth: 0.5,
             borderColor: "#d6d7da"

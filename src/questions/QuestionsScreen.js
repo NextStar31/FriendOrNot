@@ -10,9 +10,8 @@ export default class QuestionsScreen extends React.Component {
 
     render() {
         const { navigation } = this.props;
-        const myName = navigation.getParam('myName', 'toi');
-        const friendName = navigation.getParam('friendName', 'moi');
-        console.log(this.props)
+        const myName = navigation.getParam('myName');
+        const friendName = navigation.getParam('friendName');
       return (
         <View style={styles.container}>
         <Text>Play</Text>
