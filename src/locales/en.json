@@ -1,0 +1,10 @@
+{
+  "START": {
+    "myName": "Your name :",
+    "friendName": "Your friend name :",
+    "subtitle": "Test your friendship !",
+    "defaultFriendName":"Friend",
+    "defaultMyName":"Me",
+    "action":"Start"
+  }
+}
