@@ -1,6 +1,6 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
-import QuestionsScreen from './questions/QuestionsScreen';
-import StartScreen from './start/StartScreen';
+import QuestionsScreen from './src/questions/QuestionsScreen';
+import StartScreen from './src/start/StartScreen';
 
 const MainNavigator = createStackNavigator({
   Start: {screen: StartScreen},

@@ -4,10 +4,10 @@ import {
   Text,
   View,
   Button,
-  ScrollView,
   TextInput,
-  InputAccessoryView
+  TouchableHighlight
 } from "react-native";
+import i18n from "../i18n";
 
 export default class StartScreen extends React.Component {
   static navigationOptions = {
@@ -16,53 +16,46 @@ export default class StartScreen extends React.Component {
   };
   constructor(props) {
     super(props);
-    this.state = { myName: "Me", friendName: "Friend" };
+    this.state = {
+      myName: i18n.t("START.defaultMyName"),
+      friendName: i18n.t("START.defaultFriendName")
+    };
   }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
-        <Text>Test your friendship ! </Text>
+        <Text style={styles.subtitle}>{i18n.t("START.subtitle")}</Text>
 
-        <Text>Your name :</Text>
+        <Text style={styles.name}>{i18n.t("START.myName")}</Text>
         <TextInput
-          style={{
-            padding: 10,
-            borderRadius: 4,
-            minWidth:'30%',
-            maxWidth:'90%',
-            borderWidth: 0.5,
-            borderColor: "#d6d7da"
-          }}
+          style={styles.input}
           onChangeText={text => this.setState({ myName: text })}
           value={this.state.myName}
         />
 
-        <Text>Your friend name : </Text>
+        <Text style={styles.name}>{i18n.t("START.friendName")}</Text>
         <TextInput
-          style={{
-            padding: 10,
-            minWidth:'30%',
-            maxWidth:'90%',
-            borderRadius: 4,
-            borderWidth: 0.5,
-            borderColor: "#d6d7da"
-          }}
+          style={styles.input}
           onChangeText={text => this.setState({ friendName: text })}
           value={this.state.friendName}
         />
-
-        <Button
+        <TouchableHighlight
           onPress={() =>
             navigate("Questions", {
               myName: this.state.myName,
               friendName: this.state.friendName
             })
           }
-          title="Begin"
-          color="#e88f00"
-        />
+          style={styles.btnClickContain}
+        >
+          <View style={styles.btnContainer}>
+            <Text style={styles.btnText}>
+              {i18n.t("START.action").toUpperCase()}
+            </Text>
+          </View>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -74,5 +67,58 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
+  },
+  subtitle: {
+    textAlign: "center",
+    fontSize: 24,
+    color: "#e88f00",
+    lineHeight: 30,
+    margin: 20,
+    fontWeight: "bold"
+  },
+  name: {
+    textAlign: "center",
+    fontSize: 18,
+    lineHeight: 24,
+    margin: 10
+  },
+  input: {
+    padding: 10,
+    borderRadius: 4,
+    minWidth: "30%",
+    maxWidth: "90%",
+    borderWidth: 0.5,
+    // borderColor: "#d6d7da",
+    borderColor: "#e88f00",
+    fontSize: 18,
+    lineHeight: 24,
+    margin: 10
+  },
+  btnClickContain: {
+    alignSelf: "center",
+    backgroundColor: "#e88f00",
+    borderRadius: 5,
+    padding: 5,
+    margin: 50,
+    width: "60%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+  },
+  btnContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  btnText: {
+    fontSize: 18,
+    color: "white",
+    lineHeight: 30,
+    fontWeight: "bold"
   }
 });

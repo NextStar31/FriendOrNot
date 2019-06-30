@@ -1,0 +1,9 @@
+{
+    "START_myName": "Votre nom :",
+    "START_friendName": "Le nom de ton ami(e) :", 
+    "subtitle": "Tester votre amitié !",
+    "defaultFriendName":"Ami(e)",
+    "defaultMyName":"Moi",
+    "action":"Start"
+  }
+  
