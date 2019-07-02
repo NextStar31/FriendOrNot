@@ -6,5 +6,77 @@
     "defaultFriendName":"Friend",
     "defaultMyName":"Me",
     "action":"Start"
+  },
+  "QUESTION": {
+    "0": {
+      "q": "Que représente ton ami(e) pour toi ?",
+      "r0": "Ta/Ton meilleur(e) ami(e)",
+      "r1": "Une connaissance",
+      "r2": "Un(e) pote",
+      "r3": "Un(e) ami(e) parmi d'autre"
+    },
+    "1": {
+      "q": "Quand tu confies un secret à ton ami(e), tu :",
+      "r0": "Fais exprès de mentir pour tester sa confiance",
+      "r1": "A des doutes, va t'elle/il le répéter ?",
+      "r2": "A une confiance absolue",
+      "r3": "Lui rappelle plusieurs fois de ne rien dire"
+    },
+    "2": {
+      "q": "Quand tu vois ton ami(e), vous :",
+      "r0": "Vous ennuyez",
+      "r1": "Parler de tout et de rien jusqu'à tard",
+      "r2": "Trouvez toujours de quoi vous amuser",
+      "r3": "Etes chacun sur vos smartphones"
+    },
+    "3": {
+      "q": "Que préfères-tu chez ton ami(e) ?",
+      "r0": "Sa beauté",
+      "r1": "Sa gentillesse",
+      "r2": "Sa loyauté",
+      "r3": "Son argent"
+    },
+    "4": {
+      "q": "Tu attends ton ami(e) depuis 3h, quelle est ta réaction ?",
+      "r0": "Tu l'attends, il/elle t'avait prévenu de son retard",
+      "r1": "Tu te demandes s'il ne lui est rien arrivé et continue ce que tu fais",
+      "r2": "La/le bloques. Votre amitié est finie !",
+      "r3": "Tu l'appelles plusieurs fois, inquièt(e)"
+    },
+    "5": {
+      "q": "Quel animal te correspond le plus ?",
+      "r0": "Le loup",
+      "r1": "Le chien",
+      "r2": "La poule",
+      "r3": "Le chat"
+    },
+    "6": {
+      "q": "Ta voisine a insulté ton ami(e), tu :",
+      "r0": "Demande des explications à ta voisine",
+      "r1": "Ne t'en mêles pas",
+      "r2": "Coupe les ponts avec ta voisine",
+      "r3": "Coupe les ponts avec ton ami(e)"
+    },
+    "7": {
+      "q": "A qui présentes-tu ton/ta petit(e)-ami(e) en premier ?",
+      "r0": "A toute ta bande d'amis",
+      "r1": "A personne",
+      "r2": "A ton ami(e)",
+      "r3": "A toute ta classe"
+    },
+    "8": {
+      "q": "Tu t'es disputé avec ton ami(e), tu :",
+      "r0": "Fais le premier pas",
+      "r1": "Attends qu'il/elle fasse le premier pas",
+      "r2": "La bloque et la remplace. Il/Elle ne te mérite pas.",
+      "r3": "Attends que ça passe, rien ne peux briser votre amitié"
+    },
+    "9": {
+      "q": "Combien de fois parles-tu à ton ami(e) ?",
+      "r0": "Au moins une fois par mois",
+      "r1": "Au moins une fois par semaine",
+      "r2": "Au moins 1 fois par jour",
+      "r3": "Environ une fois tous les 2 mois"
+    }
   }
 }

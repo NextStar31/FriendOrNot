@@ -9,6 +9,13 @@ import {
 } from "react-native";
 import i18n from "../i18n";
 
+import {
+  AdMobBanner,
+  AdMobInterstitial,
+  PublisherBanner,
+  AdMobRewarded
+} from "expo-ads-admob";
+
 export default class StartScreen extends React.Component {
   static navigationOptions = {
     //title: 'Welcome',
@@ -22,40 +29,61 @@ export default class StartScreen extends React.Component {
     };
   }
 
+  bannerError() {
+    console.log("An error");
+    return;
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
-        <Text style={styles.subtitle}>{i18n.t("START.subtitle")}</Text>
+      <View style={{height:'100%', width:'100%'}}>
+        <View style={styles.container}>
+          <Text style={styles.subtitle}>{i18n.t("START.subtitle")}</Text>
 
-        <Text style={styles.name}>{i18n.t("START.myName")}</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={text => this.setState({ myName: text })}
-          value={this.state.myName}
-        />
+          <Text style={styles.name}>{i18n.t("START.myName")}</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={text => this.setState({ myName: text })}
+            value={this.state.myName}
+          />
 
-        <Text style={styles.name}>{i18n.t("START.friendName")}</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={text => this.setState({ friendName: text })}
-          value={this.state.friendName}
-        />
-        <TouchableHighlight
-          onPress={() =>
-            navigate("Questions", {
-              myName: this.state.myName,
-              friendName: this.state.friendName
-            })
-          }
-          style={styles.btnClickContain}
-        >
-          <View style={styles.btnContainer}>
-            <Text style={styles.btnText}>
-              {i18n.t("START.action").toUpperCase()}
-            </Text>
-          </View>
-        </TouchableHighlight>
+          <Text style={styles.name}>{i18n.t("START.friendName")}</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={text => this.setState({ friendName: text })}
+            value={this.state.friendName}
+          />
+          <TouchableHighlight
+            onPress={() =>
+              navigate("Questions", {
+                myName: this.state.myName,
+                friendName: this.state.friendName
+              })
+            }
+            style={styles.btnClickContain}
+          >
+            <View style={styles.btnContainer}>
+              <Text style={styles.btnText}>
+                {i18n.t("START.action").toUpperCase()}
+              </Text>
+            </View>
+          </TouchableHighlight>
+
+          {/*<PublisherBanner
+          bannerSize="fullBanner"
+          adUnitID="ca-app-pub-2959761366823394/3324961400" // Test ID, Replace with your-admob-unit-id
+          testDeviceID="EMULATOR"
+        />*/}
+        </View>
+        <View>
+          <AdMobBanner
+            bannerSize="smartBannerLandscape"
+            adUnitID="ca-app-pub-2959761366823394/3324961400" // Test ID, Replace with your-admob-unit-id
+            //testDeviceID="EMULATOR"
+            didFailToReceiveAdWithError={this.bannerError}
+          />
+        </View>
       </View>
     );
   }
