@@ -3,18 +3,12 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   TextInput,
   TouchableHighlight
 } from "react-native";
 import i18n from "../i18n";
 
-import {
-  AdMobBanner,
-  AdMobInterstitial,
-  PublisherBanner,
-  AdMobRewarded
-} from "expo-ads-admob";
+import { AdMobBanner } from "expo-ads-admob";
 
 export default class StartScreen extends React.Component {
   static navigationOptions = {
@@ -37,7 +31,7 @@ export default class StartScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={{height:'100%', width:'100%'}}>
+      <View style={{ height: "100%", width: "100%" }}>
         <View style={styles.container}>
           <Text style={styles.subtitle}>{i18n.t("START.subtitle")}</Text>
 
@@ -69,18 +63,13 @@ export default class StartScreen extends React.Component {
               </Text>
             </View>
           </TouchableHighlight>
-
-          {/*<PublisherBanner
-          bannerSize="fullBanner"
-          adUnitID="ca-app-pub-2959761366823394/3324961400" // Test ID, Replace with your-admob-unit-id
-          testDeviceID="EMULATOR"
-        />*/}
         </View>
+
         <View>
           <AdMobBanner
             bannerSize="smartBannerLandscape"
             adUnitID="ca-app-pub-2959761366823394/3324961400" // Test ID, Replace with your-admob-unit-id
-            //testDeviceID="EMULATOR"
+            testDeviceID="EMULATOR"
             didFailToReceiveAdWithError={this.bannerError}
           />
         </View>

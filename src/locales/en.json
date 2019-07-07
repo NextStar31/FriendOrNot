@@ -3,9 +3,16 @@
     "myName": "Your name :",
     "friendName": "Your friend name :",
     "subtitle": "Test your friendship !",
-    "defaultFriendName":"Friend",
-    "defaultMyName":"Me",
-    "action":"Start"
+    "defaultFriendName": "Friend",
+    "defaultMyName": "Me",
+    "action": "Start"
+  },
+  "keyword": "ton ami(e)",
+  "RESULT": {
+    "title": "Compatibilité amicale avec ton ami(e) :",
+    "share": "Share",
+    "replay": "Play Again",
+    "shareMessage":"FriendOrNot | Votre compatibilité amicale avec ton ami(e) est de "
   },
   "QUESTION": {
     "0": {

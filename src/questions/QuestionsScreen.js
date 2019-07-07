@@ -4,7 +4,7 @@ import {
   Text,
   View,
   TouchableHighlight,
-  Button
+  ActivityIndicator
 } from "react-native";
 import questions from "./Questions";
 import i18n from "../i18n";
@@ -23,7 +23,8 @@ export default class QuestionsScreen extends React.Component {
       points: 0,
       currentQuestion: 0,
       numberOfQuestions: 0,
-      disableInterstitialBtn: false
+      disableInterstitialBtn: false,
+      isLoading: false
     };
   }
 
@@ -36,66 +37,42 @@ export default class QuestionsScreen extends React.Component {
     });
 
     AdMobInterstitial.setAdUnitID("ca-app-pub-2959761366823394/4163400356");
-    // AdMobInterstitial.setTestDeviceID("EMULATOR");
+    AdMobInterstitial.setTestDeviceID("EMULATOR");
     AdMobInterstitial.addEventListener("interstitialDidLoad", () =>
       console.log("interstitialDidLoad")
     );
     AdMobInterstitial.addEventListener("interstitialDidFailToLoad", () =>
       console.log("interstitialDidFailToLoad")
     );
-    AdMobInterstitial.addEventListener("interstitialDidOpen", () =>
-      console.log("interstitialDidOpen")
-    );
-    AdMobInterstitial.addEventListener("interstitialDidClose", () =>
-      console.log("interstitialDidClose")
-    );
+    AdMobInterstitial.addEventListener("interstitialDidOpen", () => {
+      console.log("interstitialDidOpen");
+      this.setState({
+        isLoading: false
+      });
+    });
+    AdMobInterstitial.addEventListener("interstitialDidClose", () => {
+      console.log("interstitialDidClose");
+      const { navigate } = this.props.navigation;
+      navigate("Result", {
+        points: this.state.points,
+        numberOfQuestions: this.state.numberOfQuestions,
+        friendName:this.state.friendName
+      });
+    });
     AdMobInterstitial.addEventListener("interstitialWillLeaveApplication", () =>
       console.log("interstitialWillLeaveApplication")
-    );
-
-    //AdMobRewarded.setTestDeviceID("EMULATOR");
-    // ALWAYS USE TEST ID for Admob ads
-    AdMobRewarded.setAdUnitID("ca-app-pub-2959761366823394/7192888374");
-    AdMobRewarded.addEventListener("rewardedVideoDidRewardUser", () =>
-      console.log("interstitialDidLoad")
-    );
-    AdMobRewarded.addEventListener("rewardedVideoDidLoad", () =>
-      console.log("rewardedVideoDidLoad")
-    );
-    AdMobRewarded.addEventListener("rewardedVideoDidFailToLoad", () =>
-      console.log("rewardedVideoDidFailToLoad")
-    );
-    AdMobRewarded.addEventListener("rewardedVideoDidOpen", () =>
-      console.log("rewardedVideoDidOpen")
-    );
-    AdMobRewarded.addEventListener("rewardedVideoDidClose", () =>
-      console.log("rewardedVideoDidClose")
-    );
-    AdMobRewarded.addEventListener("rewardedVideoWillLeaveApplication", () =>
-      console.log("rewardedVideoWillLeaveApplication")
     );
   }
 
   _openInterstitial = async () => {
     try {
-      this.setState({ disableInterstitialBtn: true });
+      this.setState({
+        isLoading: true
+      });
       await AdMobInterstitial.requestAdAsync();
       await AdMobInterstitial.showAdAsync();
     } catch (error) {
       console.error(error);
-    } finally {
-      this.setState({ disableInterstitialBtn: false });
-    }
-  };
-
-  _openReward = async () => {
-    try {
-      await AdMobRewarded.requestAdAsync();
-      await AdMobRewarded.showAdAsync();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      console.log("finish");
     }
   };
 
@@ -115,6 +92,17 @@ export default class QuestionsScreen extends React.Component {
     );
   };
 
+  generateText(value) {
+    if (
+      this.state.friendName != null &&
+      this.state.friendName.trim().length != 0 &&
+      this.state.friendName != i18n.t("START.defaultFriendName")
+    ) {
+      value = value.replace(i18n.t("keyword"), this.state.friendName);
+    }
+    return value;
+  }
+
   nextQuestion() {
     let current = this.state.currentQuestion + 1;
     if (current < 10) {
@@ -122,48 +110,55 @@ export default class QuestionsScreen extends React.Component {
         currentQuestion: current
       });
     } else {
-      const { navigate } = this.props.navigation;
-      navigate("Result", {
-        points: this.state.points,
-        numberOfQuestions: this.state.numberOfQuestions
-      });
+      this._openInterstitial();
     }
   }
 
   render() {
-    const { disableInterstitialBtn } = this.state;
     return (
       <View style={{ height: "100%", width: "100%" }}>
-        <View style={styles.container}>
-          <View style={{ height: "12%", marginTop:'30%'}}>
-            <Text style={styles.title}>
-              Question {this.state.currentQuestion + 1} /{" "}
-              {this.state.numberOfQuestions}
-            </Text>
+        {this.state.isLoading && (
+          <View style={styles.loading}>
+            <ActivityIndicator size={60} color="#e88f00" />
           </View>
-         {// <View style={{ height: "20%",display: 'flex', justifyContent: 'center',   margin: 10 , borderWidth: 0.5}}>
-         }
-          <View style={{ height: "15%",  margin: 10 }}>
-          <Text style={styles.question}>
-            {i18n.t("QUESTION." + this.state.currentQuestion + ".q")}
-          </Text>
+        )}
+        {!this.state.isLoading && (
+          <View style={styles.container}>
+            <View style={{ height: "12%", marginTop: "30%" }}>
+              <Text style={styles.title}>
+                Question {this.state.currentQuestion + 1} /{" "}
+                {this.state.numberOfQuestions}
+              </Text>
+            </View>
+            {
+              // <View style={{ height: "20%",display: 'flex', justifyContent: 'center',   margin: 10 , borderWidth: 0.5}}>
+            }
+            <View style={{ height: "15%", margin: 10 }}>
+              <Text style={styles.question}>
+                {this.generateText(
+                  i18n.t("QUESTION." + this.state.currentQuestion + ".q")
+                )}
+              </Text>
+            </View>
+            {questions[this.state.currentQuestion].response.map(r => (
+              <TouchableHighlight
+                key={r.id}
+                onPress={() => this._onButtonPress(r.value)}
+                style={styles.btnClickContain}
+              >
+                <View style={styles.btnContainer}>
+                  <Text style={styles.btnText}>
+                    {this.generateText(
+                      i18n.t(
+                        "QUESTION." + this.state.currentQuestion + ".r" + r.id
+                      )
+                    )}
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            ))}
           </View>
-          {questions[this.state.currentQuestion].response.map(r => (
-            <TouchableHighlight
-              key={r.id}
-              onPress={() => this._onButtonPress(r.value)}
-              style={styles.btnClickContain}
-            >
-              <View style={styles.btnContainer}>
-                <Text style={styles.btnText}>
-                  {i18n.t(
-                    "QUESTION." + this.state.currentQuestion + ".r" + r.id
-                  )}
-                </Text>
-              </View>
-            </TouchableHighlight>
-          ))}
-        </View>
+        )}
         <View>
           <AdMobBanner
             bannerSize="smartBannerLandscape"
@@ -181,8 +176,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
- //   justifyContent: "center"
+    alignItems: "center"
+    //   justifyContent: "center"
+  },
+  loading: {
+    flex: 1,
+    justifyContent: 'center'
   },
   btnClickContain: {
     alignSelf: "center",
@@ -217,10 +216,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     lineHeight: 28,
-    fontWeight: "bold",
-   // height: "15%",
-   // margin: "auto",
-  //  borderWidth: 0.5
+    fontWeight: "bold"
+    // height: "15%",
+    // margin: "auto",
+    //  borderWidth: 0.5
   },
   question: {
     textAlign: "center",
@@ -229,7 +228,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     //height: "18%",
     color: "#e88f00",
-    padding: 10,
-   // borderWidth: 0.5
+    padding: 10
+    // borderWidth: 0.5
   }
 });
